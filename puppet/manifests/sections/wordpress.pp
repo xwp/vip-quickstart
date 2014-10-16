@@ -44,7 +44,17 @@ exec { 'wp install /srv/www/wp':
 # Install GitHub Plugins
 $github_plugin_keys = keys( $github_plugins )
 gitplugin { $github_plugin_keys:
-    git_urls => $github_plugins
+    git_urls   => $github_plugins,
+}
+
+repomonitor_repo { '/srv/www/wp-content/plugins/vip-scanner':
+  repo_name => 'VIP Scanner',
+  require   => Gitplugin[$github_plugin_keys]
+}
+
+repomonitor_repo { '/srv/www/wp-content/plugins/jetpack':
+  repo_name => 'Jetpack',
+  require   => Gitplugin[$github_plugin_keys]
 }
 
 # Install plugins
@@ -81,6 +91,11 @@ vcsrepo { '/srv/www/wp':
   provider => svn,
 }
 
+repomonitor_repo { '/srv/www/wp':
+  repo_name => 'WordPress',
+  require   => Vcsrepo['/srv/www/wp']
+}
+
 cron { '/srv/www/wp':
   command => '/usr/bin/svn up /srv/www/wp > /dev/null 2>&1',
   hour    => '*/30',
@@ -91,6 +106,11 @@ vcsrepo { '/srv/www/wp-content/themes/vip/plugins':
   ensure   => latest,
   source   => 'https://vip-svn.wordpress.com/plugins/',
   provider => svn,
+}
+
+repomonitor_repo { '/srv/www/wp-content/themes/vip/plugins':
+  repo_name => 'VIP Plugins',
+  require   => Vcsrepo['/srv/www/wp-content/themes/vip/plugins']
 }
 
 cron { '/srv/www/wp-content/themes/vip/plugins':
@@ -105,10 +125,20 @@ vcsrepo { '/srv/www/wp-content/themes/pub/twentyfourteen':
   provider => svn,
 }
 
+repomonitor_repo { '/srv/www/wp-content/themes/pub/twentyfourteen':
+  repo_name => 'Twenty Fourteen',
+  require   => Vcsrepo['/srv/www/wp-content/themes/pub/twentyfourteen']
+}
+
 vcsrepo { '/srv/www/wp-tests':
   ensure   => latest,
   source   => 'http://develop.svn.wordpress.org/trunk/',
   provider => svn,
+}
+
+repomonitor_repo { '/srv/www/wp-tests':
+  repo_name => 'WordPress Tests',
+  require   => Vcsrepo['/srv/www/wp-tests']
 }
 
 # Create a local config
