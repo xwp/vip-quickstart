@@ -94,7 +94,10 @@ if ( ! defined( 'DOMAIN_CURRENT_SITE' ) )
     define('DOMAIN_CURRENT_SITE', $_SERVER['HTTP_HOST']);
 
 if ( ! defined( 'SUBDOMAIN_INSTALL' ) )
-    define('SUBDOMAIN_INSTALL', false);
+    define('SUBDOMAIN_INSTALL', true);
+
+if ( ! defined( 'COOKIE_DOMAIN' ) )
+	define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
 
 if ( ! defined( 'WP_DEFAULT_THEME' ) )
 	define('WP_DEFAULT_THEME', 'pub/twentyfourteen');
