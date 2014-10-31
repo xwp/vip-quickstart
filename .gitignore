@@ -23,8 +23,5 @@ Gemfile.lock
 # WP-CLI dev mode
 /wp-cli
 
-# phpMyAdmin
-/www/phpmyadmin
-
 # Logs
 www/wp-content/debug.log
