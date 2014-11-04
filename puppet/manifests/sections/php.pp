@@ -22,6 +22,7 @@ class {
   'php::fpm':;
   'php::pear':;
   'php::phpunit':;
+  'php::codeception':;
 
   # Extensions
   'php::extension::apc':
