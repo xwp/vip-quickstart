@@ -1,6 +1,6 @@
 
 class database::settings {
-    $mysql_password = generate('/bin/sh', '-c', '/usr/bin/openssl rand -base64 64 | xargs echo -n')
+    $mysql_password = generate('/bin/sh', '-c', "< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c\${1:-64};echo -n;")
 }
 
 include database::settings
@@ -21,3 +21,7 @@ mysql::grant { 'wptests':
   mysql_host       => 'localhost',
 }
 
+mysql::augeas {
+  'mysqld/log_slow_queries':
+    value => '/var/log/mysql/mysql-slow.log';
+}

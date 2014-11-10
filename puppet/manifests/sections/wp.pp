@@ -9,6 +9,7 @@ $plugins = [
   'log-deprecated-notices',
   'log-viewer',
   'monster-widget',
+  'query-monitor',
   'user-switching',
   'wordpress-importer',
 
@@ -65,6 +66,13 @@ wp::command { 'plugin update --all':
   command  => 'plugin update --all',
   location => '/srv/www/wp',
   require  => Exec['wp install /srv/www/wp'],
+}
+
+# Symlink db.php for Query Monitor
+file { '/srv/www/wp-content/db.php':
+  ensure  => 'link',
+  target  => 'plugins/query-monitor/wp-content/db.php',
+  require => Wp::Plugin['query-monitor']
 }
 
 # Install WP-CLI
