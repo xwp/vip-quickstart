@@ -4,6 +4,8 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+vagrant_dir = File.expand_path(File.dirname(__FILE__))
+
 #Vagrant.require_version ">= 1.5.0"
 if `vagrant --version` < 'Vagrant 1.5.0'
     abort('Your Vagrant is too old. Please install at least 1.5.0')
