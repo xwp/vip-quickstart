@@ -32,6 +32,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder ".", "/srv"
 
+  # Customfile - POSSIBLY UNSTABLE
+  # Copied from VVV: https://github.com/Varying-Vagrant-Vagrants/VVV/blob/9ecf595fc873433bac0aaf745aaa8a495ed1ee5a/Vagrantfile#L140-L150
+  #
+  # Use this to insert your own (and possibly rewrite) Vagrant config lines. Helpful
+  # for mapping additional drives. If a file 'Customfile' exists in the same directory
+  # as this Vagrantfile, it will be evaluated as ruby inline as it loads.
+  #
+  # Note that if you find yourself using a Customfile for anything crazy or specifying
+  # different provisioning, then you may want to consider a new Vagrantfile entirely.
+  if File.exists?(File.join(vagrant_dir,'Customfile')) then
+    eval(IO.read(File.join(vagrant_dir,'Customfile')), binding)
+  end
+
   # Address a bug in an older version of Puppet
   # See http://stackoverflow.com/questions/10894661/augeas-support-on-my-vagrant-machine
   config.vm.provision :shell, :inline => "if ! dpkg -s puppet > /dev/null; then sudo apt-get update --quiet --yes && sudo apt-get install puppet --quiet --yes; fi"
