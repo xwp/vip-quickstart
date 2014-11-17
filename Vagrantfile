@@ -4,6 +4,8 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+vagrant_dir = File.expand_path(File.dirname(__FILE__))
+
 #Vagrant.require_version ">= 1.5.0"
 if `vagrant --version` < 'Vagrant 1.5.0'
     abort('Your Vagrant is too old. Please install at least 1.5.0')
@@ -31,6 +33,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.synced_folder ".", "/srv"
+
+  # Customfile - POSSIBLY UNSTABLE
+  # Copied from VVV: https://github.com/Varying-Vagrant-Vagrants/VVV/blob/9ecf595fc873433bac0aaf745aaa8a495ed1ee5a/Vagrantfile#L140-L150
+  #
+  # Use this to insert your own (and possibly rewrite) Vagrant config lines. Helpful
+  # for mapping additional drives. If a file 'Customfile' exists in the same directory
+  # as this Vagrantfile, it will be evaluated as ruby inline as it loads.
+  #
+  # Note that if you find yourself using a Customfile for anything crazy or specifying
+  # different provisioning, then you may want to consider a new Vagrantfile entirely.
+  if File.exists?(File.join(vagrant_dir,'Customfile')) then
+    eval(IO.read(File.join(vagrant_dir,'Customfile')), binding)
+  end
 
   # Address a bug in an older version of Puppet
   # See http://stackoverflow.com/questions/10894661/augeas-support-on-my-vagrant-machine

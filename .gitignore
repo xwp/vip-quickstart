@@ -3,6 +3,7 @@
 
 # Because this really is a working directory, ignore vagrant's files
 /.vagrant
+/Customfile
 
 # WordPress directory
 /www/wp
@@ -25,3 +26,6 @@
 
 # Logs
 www/wp-content/debug.log
+
+# Other ignored files
+/.*sensitive*
