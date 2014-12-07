@@ -77,14 +77,11 @@ if ( ! defined( 'WPLANG' ) ) {
 /**
  * For developers: WordPress debugging mode.
  *
- * When WP_DEBUG is true, PHP notices will be displayed during development.
+ * Change this to true to enable the display of notices during development.
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
- * in their development environments. On a staging environment, this may be
- * overridden to false via local-config.php
+ * in their development environments.
  */
-if ( ! defined( 'WP_DEBUG' ) ) {
-	define( 'WP_DEBUG', true );
-}
+define( 'WP_DEBUG', true );
 define( 'SAVEQUERIES', true );
 
 if ( ! defined( 'JETPACK_DEV_DEBUG' ) ) {
