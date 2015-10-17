@@ -153,6 +153,8 @@ if ( isset( $_COOKIE['tix_view_token'] ) )
 
 $batcache['headers']['X-nananana'] = 'Batcache';
 
+$batcache['debug_html_fragments'] = true;
+
 unset( $_batcache_script_name );
 
 // VIP Quickstart: Fix module activation
